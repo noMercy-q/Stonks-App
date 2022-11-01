@@ -18,13 +18,13 @@ public class Cost implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    private int amount;
+    private Long amount;
     private Date date;
 
     public Cost() {}
@@ -37,11 +37,11 @@ public class Cost implements Serializable {
         this.user = user;
     }
 
-    public int getAmount() {
+    public Long getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(Long amount) {
         this.amount = amount;
     }
 
@@ -51,8 +51,5 @@ public class Cost implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    
-    
+    } 
 }

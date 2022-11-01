@@ -60,7 +60,18 @@
 		<dependency>   -- Start of dependency tag.
 			<groupId>org.springframework.boot</groupId>   -- Start and end of groupId tag.
 			<artifactId>spring-boot-starter-jdbc</artifactId>  -- Start and end of artifactId tag.
-		</dependency> 
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

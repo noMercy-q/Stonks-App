@@ -6,8 +6,6 @@ import javax.persistence.*;
 import java.util.List;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 // Open postgres console: psql -U user -d stonksdb -W
 
@@ -19,20 +17,11 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    ///@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    //private Set<Cost> costs;
-
     @ManyToMany()
     @JoinTable(name = "users_roles",
                 joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
                 inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Role> roles = new ArrayList<>();
-    //private Set<Role> roles;
-
-    // @ElementCollection(targetClass = Role.class, fetch = FetchType.LAZY)
-    // @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
-    // @Enumerated(EnumType.STRING)
-    // private Set<Role> roles;
 
     @Column(nullable = false)
     private String username;
@@ -66,14 +55,6 @@ public class User implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
-    // public Set<Cost> getCosts() {
-    //     return costs;
-    // }
-
-    // public void setCosts(Set<Cost> costs) {
-    //     this.costs = costs;
-    // }
 
     public String getUsername() {
         return username;

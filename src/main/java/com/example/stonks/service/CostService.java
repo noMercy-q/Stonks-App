@@ -6,5 +6,7 @@ import com.example.stonks.model.User;
 
 public interface CostService {
     void saveCost(CostDto costDto);
-    List<CostDto> findAllCostsForUser(User user);    
+    List<CostDto> findAllCostsForUser(User user);
+    Long getTotalCredit(User user);
+    Long getTotalDebit(User user);
 }

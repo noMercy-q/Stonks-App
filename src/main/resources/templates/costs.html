@@ -42,6 +42,13 @@
                 <td th:text="${cost.amount}"></td>
                 <td th:text="${date_format.format(cost.date)}"></td>
             </tr>
+
+            <div>
+                <h3>Total credit: </h3>
+                <h3 th:text="${total_credit}"></h3>
+                <h3>Total debit: </h3>
+                <h3 th:text="${total_debit}"></h3>
+            </div>
         </tbody>
     </table>
 </div>

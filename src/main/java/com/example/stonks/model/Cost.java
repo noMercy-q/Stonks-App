@@ -3,7 +3,12 @@ package com.example.stonks.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
+import lombok.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "costs")
 public class Cost implements Serializable {
@@ -25,30 +30,4 @@ public class Cost implements Serializable {
 
     @Column
     private Date date;
-
-    public Cost() {}
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Long getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Long amount) {
-        this.amount = amount;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    } 
 }

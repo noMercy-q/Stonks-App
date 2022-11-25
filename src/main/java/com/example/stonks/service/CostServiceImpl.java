@@ -2,11 +2,7 @@ package com.example.stonks.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
 import com.example.stonks.dto.CostDto;
 import com.example.stonks.model.Cost;
 import com.example.stonks.model.User;
@@ -37,6 +33,23 @@ public class CostServiceImpl implements CostService {
         return costs.stream()
             .map((cost) -> mapToCostDto(cost))
             .collect(Collectors.toList());
+    }
+
+    @Override
+    public Long getTotalDebit(User user) {
+        List<CostDto> costs = findAllCostsForUser(user);
+        return costs.stream().filter(cost -> cost.getAmount() >= 0)
+                             .mapToLong(cost -> cost.getAmount())
+                             .sum();
+    }
+
+
+    @Override
+    public Long getTotalCredit(User user) {
+        List<CostDto> costs = findAllCostsForUser(user);
+        return costs.stream().filter(cost -> cost.getAmount() < 0)
+                             .mapToLong(cost -> cost.getAmount())
+                             .sum();
     }
 
     private CostDto mapToCostDto(Cost cost) {

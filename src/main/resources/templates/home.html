@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:href="@{/assets/css/style.css}" rel = "stylesheet" />
+    <link th:href="@{/assets/css/bootstrap.css}" rel = "stylesheet" />
+
+    <meta charset="UTF-8">
+    <title>Your costs</title>
+    <div th:replace="header :: header1"></div>
+</head>
+<body>
+<div class="grid">   
+    <div class="column scroll-table">
+        <h3>Costs table</h3>
+        <a th:href="@{/cost}">New cost</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Sum</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+        </table>	
+        <div class="scroll-table-body">
+            <table>
+                <tbody>
+                    <tr th:each = "cost : ${costs}">
+                        <td th:text="${cost.amount}"></td>
+                        <td th:text="${cost.category}"></td>
+                        <td th:text="${date_format.format(cost.date)}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>	
+    </div>
+    <div>
+        <div class="column">
+            <h3>Diagrams</h3>
+        </div>
+    </div>
+</div>
+</body>
+</html>

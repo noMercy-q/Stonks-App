@@ -1,7 +1,6 @@
 package com.example.stonks.controller;
 
 import java.util.List;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,7 +8,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import com.example.stonks.dto.UserDto;
 import com.example.stonks.model.User;
 import com.example.stonks.service.UserService;
@@ -39,20 +37,18 @@ public class AuthController {
     public String registration(@Validated @ModelAttribute("user") UserDto userDto,
                                BindingResult result,
                                Model model) {
-        User existingUser = userService.findUserByEmail(userDto.getEmail());
+        UserDto existingUser = userService.findUserByEmail(userDto.getEmail());
 
         if (existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()){
             result.rejectValue("email", null,
                     "There is already an account registered with the same email");
         }
-
         if (result.hasErrors()) {
             model.addAttribute("user", userDto);
             return "/register";
         }
-
         userService.saveUser(userDto);
-        return "redirect:/login";
+        return "redirect:/";
     }
 
     @GetMapping("/users")

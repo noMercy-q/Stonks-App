@@ -1,5 +1,7 @@
 package com.example.stonks.service;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -44,8 +46,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public UserDto findUserByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        return mapToUserDto(user);
     }
 
     @Override
@@ -61,8 +64,22 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public UserDto getCurrentUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();  
+        String email;
+        if (principal instanceof UserDetails) {
+            email = ((UserDetails)principal).getUsername(); // returns email(!)
+        } else {
+            email = principal.toString();
+        }
+        UserDto user = findUserByEmail(email);
+        return user;
+    }
+
     private UserDto mapToUserDto(User user) {
         UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
         userDto.setUsername(user.getUsername());
         userDto.setEmail(user.getEmail());
         return userDto;

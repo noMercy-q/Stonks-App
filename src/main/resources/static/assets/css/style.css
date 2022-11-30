@@ -56,3 +56,11 @@
     padding: 60px;
     padding-bottom: 40px;
 }
+
+/* Diagrams */
+#myChart {
+	width: 200px;
+	height: 300px !important;
+	align-items: center !important;
+	align-content: center !important;
+}

@@ -1,7 +1,9 @@
 package com.example.stonks.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import com.example.stonks.dto.CostDto;
@@ -51,6 +53,16 @@ public class CostServiceImpl implements CostService {
         return costs.stream()
                     .map((cost) -> mapToCostDto(cost))
                     .collect(Collectors.toList());
+    }
+
+    @Override
+    public Map<String, Integer> createCategroriesMap(UserDto user) {
+        Map<String, Integer> categories_map = new HashMap<>();
+        List<CostDto> costs = findAllCostsForUser(user);
+        for (CostDto cost : costs) {
+            categories_map.merge(cost.getCategory(), Math.toIntExact(cost.getAmount()), Integer::sum);
+        }
+        return categories_map;
     }
 
     @Override

@@ -37,6 +37,43 @@
     <div>
         <div class="column">
             <h3>Diagrams</h3>
+            <div>
+                <canvas id="myChart"></canvas>
+              </div>
+              
+              <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+              
+              <script th:inline="javascript">
+                const ctx = document.getElementById('myChart');
+
+                /*<![CDATA[*/
+
+                const category_names = /*[[${category_names}]]*/ [];
+                const category_costs = /*[[${category_costs}]]*/ [];
+                console.log(category_costs[0]);
+              
+                new Chart(ctx, {
+                  type: 'pie',
+                  data: {
+                    labels: category_names,
+                    datasets: [{
+                      label: '# of Votes',
+                      data: category_costs,
+                      borderWidth: 1
+                    }]
+                  },
+                //   options: {
+                //     scales: {
+                //       y: {
+                //         // beginAtZero: true
+                //       }
+                //     }
+                //   }
+                });
+
+                /*]]>*/
+              </script>
+              
         </div>
     </div>
 </div>

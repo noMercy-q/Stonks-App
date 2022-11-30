@@ -2,7 +2,9 @@ package com.example.stonks.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -48,6 +50,8 @@ public class CostController {
         //UserDto user = userService.findUserByEmail(email);
         UserDto user = userService.getCurrentUser();
         List<CostDto> costs = costService.findAllCostsForUser(user);
+        Map<String, Integer> categories_map = costService.createCategroriesMap(user);
+        
         Long total_credit = costService.getTotalCredit(user);
         Long total_debit = costService.getTotalDebit(user);
         
@@ -55,6 +59,8 @@ public class CostController {
         DateFormat date_format = new SimpleDateFormat(pattern);
 
         model.addAttribute("costs", costs);
+        model.addAttribute("category_names", categories_map.keySet());
+        model.addAttribute("category_costs", categories_map.values());
         model.addAttribute("date_format", date_format);
         model.addAttribute("total_credit", total_credit);
         model.addAttribute("total_debit", total_debit);

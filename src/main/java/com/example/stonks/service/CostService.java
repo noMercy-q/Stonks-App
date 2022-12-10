@@ -9,7 +9,7 @@ import com.example.stonks.model.User;
 public interface CostService {
     void saveCost(CostDto costDto, UserDto user);
     List<CostDto> findAllCostsForUser(UserDto user);
-    Map<String, Integer> createCategroriesMap(UserDto user);
+    Map<String, Integer> createCategroriesMap(UserDto user, Boolean positive_sum);
     Long getTotalCredit(UserDto user);
     Long getTotalDebit(UserDto user);
 }

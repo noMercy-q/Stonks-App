@@ -38,28 +38,56 @@
         <div class="column">
             <h3>Diagrams</h3>
             <div>
-                <canvas id="myChart"></canvas>
-              </div>
+                <canvas id="debit_chart" class="chart"></canvas>
+                <canvas id="credit_chart" class="chart"></canvas>
+            </div>
               
               <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
               
               <script th:inline="javascript">
-                const ctx = document.getElementById('myChart');
+                const debit_chart = document.getElementById('debit_chart');
+                const credit_chart = document.getElementById('credit_chart');
+
 
                 /*<![CDATA[*/
 
-                const category_names = /*[[${category_names}]]*/ [];
-                const category_costs = /*[[${category_costs}]]*/ [];
-                console.log(category_costs[0]);
-              
-                new Chart(ctx, {
+                const debit_labels = /*[[${debit_labels}]]*/ [];
+                const debit_values = /*[[${debit_values}]]*/ [];
+
+                const credit_labels = /*[[${credit_labels}]]*/ [];
+                const credit_values = /*[[${credit_values}]]*/ [];
+
+                new Chart(debit_chart, {
+                  type: 'pie',
+                  radius: 20,
+                  data: {
+                    labels: Array.from(debit_labels),
+                    datasets: [{
+                      label: 'Sum: ',
+                      data: Array.from(debit_values),
+                      borderWidth: 1,
+                      radius: "60%",
+                      cutout: "60%"
+                    }]
+                  },
+                //   options: {
+                //     scales: {
+                //       y: {
+                //         // beginAtZero: true
+                //       }
+                //     }
+                //   }
+                });
+
+                new Chart(credit_chart, {
                   type: 'pie',
                   data: {
-                    labels: category_names,
+                    labels: Array.from(credit_labels),
                     datasets: [{
-                      label: '# of Votes',
-                      data: category_costs,
-                      borderWidth: 1
+                      label: 'Sum: ',
+                      data: Array.from(credit_values),
+                      borderWidth: 1,
+                      radius: "60%",
                     }]
                   },
                 //   options: {

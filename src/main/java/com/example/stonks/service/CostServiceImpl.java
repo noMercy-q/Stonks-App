@@ -56,11 +56,13 @@ public class CostServiceImpl implements CostService {
     }
 
     @Override
-    public Map<String, Integer> createCategroriesMap(UserDto user) {
+    public Map<String, Integer> createCategroriesMap(UserDto user, Boolean positive_sum) {
         Map<String, Integer> categories_map = new HashMap<>();
         List<CostDto> costs = findAllCostsForUser(user);
         for (CostDto cost : costs) {
-            categories_map.merge(cost.getCategory(), Math.toIntExact(cost.getAmount()), Integer::sum);
+            if (positive_sum == cost.getAmount() > 0)
+                categories_map.merge(cost.getCategory(), Math.toIntExact(cost.getAmount()), Integer::sum);
+            
         }
         return categories_map;
     }

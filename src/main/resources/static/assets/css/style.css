@@ -55,12 +55,22 @@
 .column {
     padding: 60px;
     padding-bottom: 40px;
+	max-height: 100%;
 }
 
 /* Diagrams */
-#myChart {
+/* #myChart {
 	width: 200px;
 	height: 300px !important;
 	align-items: center !important;
 	align-content: center !important;
-}
+} */
+
+/* .chart { */
+	/* max-height: 60%; */
+	/* width: 350px !important;  */
+	/* height: 350px !important; */
+	/* padding: 50px; */
+	/* align-items: center !important; */
+	/* align-content: center !important; */
+/* } */

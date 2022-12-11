@@ -61,8 +61,7 @@ public class CostServiceImpl implements CostService {
         List<CostDto> costs = findAllCostsForUser(user);
         for (CostDto cost : costs) {
             if (positive_sum == cost.getAmount() > 0)
-                categories_map.merge(cost.getCategory(), Math.toIntExact(cost.getAmount()), Integer::sum);
-            
+                categories_map.merge(cost.getCategory(), Math.toIntExact(cost.getAmount()), Integer::sum);     
         }
         return categories_map;
     }

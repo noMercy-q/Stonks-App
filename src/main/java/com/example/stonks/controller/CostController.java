@@ -20,12 +20,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.stonks.dto.CategoryDto;
 import com.example.stonks.dto.CostDto;
+import com.example.stonks.dto.TargetDto;
 import com.example.stonks.dto.UserDto;
 import com.example.stonks.model.User;
-import com.example.stonks.service.CategoryService;
-import com.example.stonks.service.CostService;
-import com.example.stonks.service.CurrencyService;
-import com.example.stonks.service.UserService;
+import com.example.stonks.service.*;
+
 
 @Controller
 public class CostController {
@@ -37,13 +36,18 @@ public class CostController {
     private UserService userService;
     private CategoryService categoryService;
     private CurrencyService currencyService;
+    private TargetService targetService;
 
-    public CostController(CostService costService, UserService userService,
-                          CategoryService categoryService, CurrencyService currencyService) {
+    public CostController(CostService costService,
+                          UserService userService,
+                          CategoryService categoryService,
+                          CurrencyService currencyService,
+                          TargetService targetService) {
         this.costService = costService;
         this.userService = userService;
         this.categoryService = categoryService;
         this.currencyService = currencyService;
+        this.targetService = targetService;
     }
 
     @GetMapping("/")
@@ -62,8 +66,19 @@ public class CostController {
         String dollar_rate = currencyService.getCurrencyRate(DOLLAR);
         String euro_rate = currencyService.getCurrencyRate(EURO);
 
+        List<TargetDto> targets = targetService.findTargetsForUser(user);
+
+        CostDto cost = new CostDto();
+        List<CategoryDto> categories = categoryService.findCategoriesForUser(user);
+        CategoryDto new_category = new CategoryDto();
+
+        model.addAttribute("cost", cost);
+        model.addAttribute("categories", categories);
+        model.addAttribute("new_category", new_category);
+
         model.addAttribute("user", user);
         model.addAttribute("costs", costs);
+        model.addAttribute("targets", targets);
 
         model.addAttribute("dollar_rate", dollar_rate);
         model.addAttribute("euro_rate", euro_rate);
@@ -94,8 +109,14 @@ public class CostController {
     public String cost(@Validated @ModelAttribute("cost")  @DateTimeFormat(pattern = "dd.MM.yyyy") CostDto costDto,
                         BindingResult result, Model model) {     
                             
-        System.out.println(costDto.toString());
         costService.saveCost(costDto, userService.getCurrentUser());
+        return "redirect:/";
+    }
+
+    @PostMapping("/category/save")
+    public String category(@Validated @ModelAttribute("category") CategoryDto categoryDto, BindingResult result, Model model) {
+
+        categoryService.saveCategory(categoryDto, userService.getCurrentUser());
         return "redirect:/";
     }
 }

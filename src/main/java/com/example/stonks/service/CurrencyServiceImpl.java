@@ -21,7 +21,7 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     private static final String CURRENCY_URL = "https://currate.ru/api/";
     private static final String RATES = "rates";
-    private static final String SECRET_KEY = "3 5c324233b1cf3a2bb13341e625f6dca";
+    private static final String SECRET_KEY = "35c324233b1cf3a2bb13341e625f6dca";
 
     Logger logger = LoggerFactory.getLogger(CurrencyServiceImpl.class);
 
@@ -40,18 +40,11 @@ public class CurrencyServiceImpl implements CurrencyService {
         Call call = client.newCall(request);
         try {
             Response response = call.execute();
-            
-            
             String body = response.body().string(); 
-            
-            System.out.println(body);
-
             return new Gson()
                 .fromJson(body, new TypeToken<HashMap<String, Object>>() {}.getType());
-
-        }
-        catch (IOException exception) {
-            System.err.println("Currency service: Bad request");
+        } catch (IOException exception) {
+            logger.error("Currency service error. " + exception.getMessage());
             return null;
         }
     }
@@ -66,7 +59,7 @@ public class CurrencyServiceImpl implements CurrencyService {
         String dollar_url = buildUrl(currency);
         Map<String, Object> response_map = makeRequest(dollar_url);
 
-        if (response_map.get("status").toString() != "200") {
+        if (!response_map.get("status").toString().equals("200.0")) {
             logger.error("Currency service bad request: " +
                           response_map.get("status").toString() + " " +
                           response_map.get("message").toString());

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import com.example.stonks.dto.CostDto;
 import com.example.stonks.dto.UserDto;
-import com.example.stonks.model.User;
 
 public interface CostService {
     void saveCost(CostDto costDto, UserDto user);

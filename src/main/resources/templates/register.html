@@ -13,7 +13,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" th:href="@{/index}">Registration and Login System</a>
+    <span class="navbar-brand">Stonks App</span>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -26,16 +26,16 @@
     </div>
   </div>
 </nav>
-<br /><br /><br />
+<br/><br/>
 <div class="container">
-  <div class="row col-md-8 offset-md-2">
+  <div class="row col-md-6 offset-md-3">
     <div class="card">
       <div class="card-header">
           <h2 class="text-center">Registration</h2>
       </div>
       <div th:if="${param.success}">
           <div class="alert alert-info">
-            You have successfully registered our app!
+              Success!
           </div>
       </div>
       <div class="card-body">
@@ -43,8 +43,7 @@
             method="post"
             role="form"
             th:action="@{/register/save}"
-            th:object="${user}"
-          >
+            th:object="${user}">
             
             <div class="form-group mb-3">
               <label class="form-label">Username</label>
@@ -55,7 +54,9 @@
                       placeholder="Enter username"
                       th:field="*{username}"
                       type="text"
-              />
+                      required title="4-30 characters"
+                      minlength="4"
+                      maxlength="30"/>
               <p th:errors = "*{username}" class="text-danger"
                  th:if="${#fields.hasErrors('username')}"></p>
             </div>
@@ -63,13 +64,15 @@
             <div class="form-group mb-3">
               <label class="form-label">Email</label>
               <input
-                      class="form-control"
-                      id="email"
-                      name="email"
-                      placeholder="Enter email address"
-                      th:field="*{email}"
-                      type="email"
-              />
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  placeholder="Enter email address"
+                  th:field="*{email}"
+                  type="email"
+                  required title="4-30 characters"
+                  minlength="4"
+                  maxlength="30"/>
               <p th:errors = "*{email}" class="text-danger"
                  th:if="${#fields.hasErrors('email')}"></p>
             </div>
@@ -83,13 +86,15 @@
                       placeholder="Enter password"
                       th:field="*{password}"
                       type="password"
-              />
+                      required title="4-30 characters"
+                      minlength="4"
+                      maxlength="30"/>
               <p th:errors = "*{password}" class="text-danger"
                  th:if="${#fields.hasErrors('password')}"></p>
             </div>
             <div class="form-group">
-              <button class="btn btn-primary" type="submit">Register</button>
-              <span>Already registered? <a th:href="@{/login}">Login here</a></span>
+              <button class="btn btn-primary" type="submit">Sign up</button>
+              <span style="margin-left:20px">Already have an account?<a th:href="@{/login}" style="margin-left: 15px">Login here</a></span>
             </div>
           </form>
       </div>

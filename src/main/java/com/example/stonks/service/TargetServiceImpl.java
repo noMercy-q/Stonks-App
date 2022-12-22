@@ -36,6 +36,13 @@ public class TargetServiceImpl implements TargetService {
     }
 
     @Override
+    public void updateTarget(TargetDto targetDto) {
+        Target target = targetRepository.findByIdAndName(targetDto.getId(), targetDto.getName());
+        target.setCurrent_sum(targetDto.getCurrent_sum());
+        targetRepository.save(target);
+    }
+
+    @Override
     public List<TargetDto> findTargetsForUser(UserDto user) {
         List<Target> targets = targetRepository.findByUserId(user.getId());
         return targets.stream()
@@ -43,11 +50,19 @@ public class TargetServiceImpl implements TargetService {
                       .collect(Collectors.toList());
     }
 
+    @Override
+    public TargetDto findTargetForUserByName(UserDto user, String name) {
+        System.out.println(name);
+        Target target = targetRepository.findByUserIdAndName(user.getId(), name);
+        return mapToTargetDto(target);
+    }
+
     private TargetDto mapToTargetDto(Target target) {
         TargetDto targetDto = new TargetDto();
         targetDto.setName(target.getName());
         Long current_sum = target.getCurrent_sum();
         Long final_sum = target.getFinal_sum();
+        targetDto.setId(target.getId());
         targetDto.setCurrent_sum(current_sum);
         targetDto.setFinal_sum(final_sum);
         targetDto.setProgress(Math.round(current_sum / (double)final_sum * 100));

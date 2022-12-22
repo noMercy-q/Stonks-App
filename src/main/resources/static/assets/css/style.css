@@ -1,16 +1,18 @@
 /* Costs table */
 .scroll-table-body {
-	/* height: 300px; */
-	max-height: 450px;
+	max-height: 300px;
 	overflow-x: auto;
 	margin-top: 0px;
 	margin-bottom: 20px;
 	border-bottom: 1px solid #eee;
+	border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
 .scroll-table table {
 	width:100%;
 	table-layout: fixed;
 	border: none;
+	font-size: larger;
 }
 .scroll-table thead th {
 	font-weight: bold;
@@ -18,16 +20,17 @@
 	border: none;
 	padding: 10px 15px;
 	background: #d8d8d8;
-	font-size: 14px;
+	font-size: 18px;
 	border-left: 1px solid #ddd;
 	border-right: 1px solid #ddd;
 }
+
 .scroll-table tbody td {
 	text-align: left;
 	border-left: 1px solid #ddd;
 	border-right: 1px solid #ddd;
 	padding: 10px 15px;
-	font-size: 14px;
+	font-size: 18px;
 	vertical-align: top;
 }
 .scroll-table tbody tr:nth-child(even){
@@ -48,7 +51,7 @@
 /* Main grid */
 .grid {
     display: grid;
-    grid-template-columns: 65% 4% 27% 4%;
+    grid-template-columns: 65% 5% 25% 5%;
     min-width: 1000px;
 }
 
@@ -58,7 +61,7 @@
 	max-height: 100%;
 }
 
-/* Pop up form */
+/* Pop-up form */
 
 .modal {
 	display: none;
@@ -149,9 +152,47 @@ button.button {
 }
 
 button.button:hover {
-	border-bottom: #a99567 1px solid;
-	color: #a99567;
+	border-bottom:  #070707 1px solid;
+	color: #ececec;
 }
+
+/* Multi-button */
+
+.multi-button {
+	/* filter: drop-shadow(3px 10px 15px rgba(0, 0, 0, 0.45)); */
+  }
+  .multi-button button {
+	height: 50px;
+	width: 200px;
+	/* background: linear-gradient(to bottom, yellow, green); */
+	background-color: rgb(185, 206, 0);
+	font-weight: bold;
+	color: white;
+	font-size: 1.2rem;
+	border: none;
+	margin: -5px; 
+	padding: 0;
+	stroke: black;
+	outline: none;
+  }
+  .multi-button :nth-child(1) {
+	border-radius: 20px 0 0 20px;
+  }
+  .multi-button :nth-child(3) {
+	border-radius: 0 20px 20px 0;
+  }
+  button:hover {
+	cursor: pointer;
+	filter: drop-shadow(3px 5px 5px rgba(0, 0, 0, 0.45));
+  }
+  button:active {
+	filter: none;
+	transform: scale(.95);
+  }
+
+  .btn-group {
+	width: 550px;
+  }
 
   /* .block {
     margin-left: auto;

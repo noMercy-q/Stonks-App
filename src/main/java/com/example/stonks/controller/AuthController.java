@@ -1,6 +1,10 @@
 package com.example.stonks.controller;
 
 import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,7 +40,8 @@ public class AuthController {
     @PostMapping("/register/save")
     public String registration(@Validated @ModelAttribute("user") UserDto userDto,
                                BindingResult result,
-                               Model model) {
+                               Model model, 
+                               HttpServletRequest request) {
         UserDto existingUser = userService.findUserByEmail(userDto.getEmail());
 
         if (existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()){
@@ -48,6 +53,12 @@ public class AuthController {
             return "/register";
         }
         userService.saveUser(userDto);
+
+        try {
+            request.login(userDto.getEmail(), userDto.getPassword());
+        } catch (ServletException exception) {
+            return "redirect:/login";
+        }
         return "redirect:/";
     }
 

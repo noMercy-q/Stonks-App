@@ -14,11 +14,11 @@
     <div th:fragment="header1">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" th:href="@{/index}">Stonks App</a>
+                <a class="navbar-brand" th:href="@{/}" style="margin-left:100px;">Stonks App</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div th:if="${dollar_rate}" class="navbar-brand">
+                <div th:if="${dollar_rate}" class="navbar-brand" style="margin-left: 50px">
                     <span>Rub/Usd: </span>
                     <div th:text="${dollar_rate}"></div>
                 </div>
@@ -26,7 +26,7 @@
                     <span>Rub/Eur: </span>
                     <div th:text="${euro_rate}"></div>
                 </div>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 1200px">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <!-- <span th:text="${user.getUsername()}" class="nav-link active"></span> -->

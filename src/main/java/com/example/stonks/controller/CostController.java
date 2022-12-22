@@ -1,5 +1,6 @@
 package com.example.stonks.controller;
 
+import java.lang.ProcessBuilder.Redirect;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Currency;
@@ -67,17 +68,19 @@ public class CostController {
         String euro_rate = currencyService.getCurrencyRate(EURO);
 
         List<TargetDto> targets = targetService.findTargetsForUser(user);
-
-        CostDto cost = new CostDto();
         List<CategoryDto> categories = categoryService.findCategoriesForUser(user);
+        
+        CostDto new_cost = new CostDto();
         CategoryDto new_category = new CategoryDto();
+        TargetDto new_target = new TargetDto();
 
-        model.addAttribute("cost", cost);
-        model.addAttribute("categories", categories);
+        model.addAttribute("new_cost", new_cost);
         model.addAttribute("new_category", new_category);
+        model.addAttribute("new_target", new_target);
 
         model.addAttribute("user", user);
         model.addAttribute("costs", costs);
+        model.addAttribute("categories", categories);
         model.addAttribute("targets", targets);
 
         model.addAttribute("dollar_rate", dollar_rate);
@@ -114,9 +117,27 @@ public class CostController {
     }
 
     @PostMapping("/category/save")
-    public String category(@Validated @ModelAttribute("category") CategoryDto categoryDto, BindingResult result, Model model) {
+    public String category(@Validated @ModelAttribute("category") CategoryDto categoryDto, Model model) {
 
         categoryService.saveCategory(categoryDto, userService.getCurrentUser());
+        return "redirect:/";
+    }
+
+    @PostMapping("/target/save")
+    public String target(@Validated @ModelAttribute("target") TargetDto targetDto, Model model) {
+        targetDto.setCurrent_sum(0L);
+        targetDto.setProgress(0L);
+        targetService.saveTarget(targetDto, userService.getCurrentUser());
+        return "redirect:/";
+    }
+ 
+    @PostMapping("/target/update")
+    public String updateTarget(@Validated @ModelAttribute("target") TargetDto updTargetDto, Model model) {
+        UserDto user = userService.getCurrentUser();
+        System.out.println(updTargetDto.getName());
+        TargetDto targetDto = targetService.findTargetForUserByName(user, updTargetDto.getName());
+        targetDto.updateCurrentSum(updTargetDto.getCurrent_sum());
+        targetService.updateTarget(targetDto);
         return "redirect:/";
     }
 }

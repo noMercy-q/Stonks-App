@@ -12,7 +12,6 @@ import lombok.*;
 @Entity
 @Table(name = "costs")
 public class Cost implements Serializable {
-    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

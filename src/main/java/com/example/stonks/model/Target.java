@@ -9,8 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "targets")
-public class Target {
-    
+public class Target { 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

@@ -22,7 +22,9 @@ public class CostServiceImpl implements CostService {
     private UserRepository userRepositiry;
     private CategoryRepository categoryRepository;
 
-    public CostServiceImpl(CostRepository costRepository, UserRepository userRepository, CategoryRepository categoryRepository) {
+    public CostServiceImpl(CostRepository costRepository,
+                           UserRepository userRepository,
+                           CategoryRepository categoryRepository) {
         this.costRepository = costRepository;
         this.userRepositiry = userRepository;
         this.categoryRepository = categoryRepository;
@@ -40,7 +42,6 @@ public class CostServiceImpl implements CostService {
 
         User user = userRepositiry.findByEmail(userDto.getEmail());
         cost.setUser(user);
-
         Category category = categoryRepository.findByNameAndUserId(costDto.getCategory(), user.getId());
         cost.setCategory(category);
 
@@ -61,7 +62,7 @@ public class CostServiceImpl implements CostService {
         List<CostDto> costs = findAllCostsForUser(user);
         for (CostDto cost : costs) {
             if (positive_sum == cost.getAmount() > 0)
-                categories_map.merge(cost.getCategory(), Math.toIntExact(cost.getAmount()), Integer::sum);     
+                categories_map.merge(cost.getCategory(), Math.toIntExact(cost.getAmount()), (t, u) -> Integer.sum(t, u));     
         }
         return categories_map;
     }

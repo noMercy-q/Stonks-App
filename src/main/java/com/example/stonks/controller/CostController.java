@@ -1,16 +1,11 @@
 package com.example.stonks.controller;
 
-import java.lang.ProcessBuilder.Redirect;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Currency;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,7 +18,6 @@ import com.example.stonks.dto.CategoryDto;
 import com.example.stonks.dto.CostDto;
 import com.example.stonks.dto.TargetDto;
 import com.example.stonks.dto.UserDto;
-import com.example.stonks.model.User;
 import com.example.stonks.service.*;
 
 

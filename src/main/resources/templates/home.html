@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <link th:href="@{/assets/css/style.css}" rel="stylesheet" />
+  <link th:href="@{/assets/css/bootstrap.css}" rel="stylesheet" />
+
+  <meta charset="UTF-8">
+  <title>Your costs</title>
+  <div th:replace="header :: header1"></div>
+</head>
+
+<body>
+  <div id="modalOne" class="modal">
+    <div class="modal-content">
+      <div class="contact-form">
+        <a class="close">&times;</a>
+        <form method="post" role="form" th:action="@{/cost/save}" th:object="${new_cost}">
+
+          <div class="form-group mb-3">
+            <label class="form-label">Sum</label>
+            <input class="form-control" id="Sum" name="Sum" placeholder="Enter sum" th:field="*{amount}" type="text"
+              pattern="[0-9], \-" required />
+            <p th:errors="*{amount}" class="text-danger" th:if="${#fields.hasErrors('amount')}"></p>
+          </div>
+
+          <div class="form-group mb-3">
+            <label class="form-label">Date</label>
+            <input class="form-control" id="date" name="date" placeholder="Enter date" th:field="*{date}" type="date" />
+            <p th:errors="*{date}" class="text-danger" th:if="${#fields.hasErrors('date')}"></p>
+          </div>
+
+          <div class="form-group mb-3">
+            <select name="category" id="category">
+              <option th:each="category : ${categories}" th:value="${category.name}" th:text="${category.name}">
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary" type="submit">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalTwo" class="modal">
+    <div class="modal-content">
+      <div class="contact-form">
+        <span class="close">&times;</span>
+        <form method="post" role="form" th:action="@{/category/save}" th:object="${new_category}">
+
+          <div class="form-group mb-3">
+            <label class="form-label">Category name</label>
+            <input class="form-control" id="Name" name="Name" placeholder="Enter category name" th:field="*{name}"
+              type="text" required title="5-30 characters" minlength="4" maxlength="30" />
+            <p th:errors="*{name}" class="text-danger" th:if="${#fields.hasErrors('name')}"></p>
+          </div>
+
+          <div class="form-check" style="margin-bottom:7px">
+            <input class="form-check-input" id="Type" name="Type" th:field="*{type}" th:value="true" type="radio"
+              checked required />
+            <label class="form-check-label" for="flexRadioDefault1">
+              Debit
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" name="Type" th:field="*{type}" th:value="true" type="radio">
+            <label class="form-check-label" for="flexRadioDefault1">
+              Credit
+            </label>
+          </div>
+
+          <div class="form-group" style="margin-top: 20px;">
+            <button class="btn btn-primary" type="submit">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalThree" class="modal">
+    <div class="modal-content">
+      <div class="contact-form">
+        <a class="close">&times;</a>
+        <form method="post" role="form" th:action="@{/target/save}" th:object="${new_target}">
+
+          <div class="form-group mb-3">
+            <label class="form-label">Target name</label>
+            <input class="form-control" id="target_name" name="target_name" placeholder="Enter name" th:field="*{name}"
+              type="text" required title="5-30 characters" minlength="4" maxlength="30" />
+            <p th:errors="*{name}" class="text-danger" th:if="${#fields.hasErrors('name')}"></p>
+          </div>
+
+          <div class="form-group mb-3">
+            <label class="form-label">Target sum</label>
+            <input class="form-control" id="final_sum" name="final_sum" placeholder="Enter sum" th:field="*{final_sum}"
+              type="text" required minlength="4" maxlength="30" pattern="[0-9]" />
+            <p th:errors="*{final_sum}" class="text-danger" th:if="${#fields.hasErrors('final_sum')}"></p>
+          </div>
+
+          <div class="form-group">
+            <button class="btn btn-primary" type="submit">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalFour" class="modal">
+    <div class="modal-content">
+      <div class="contact-form">
+        <a class="close">&times;</a>
+        <form method="post" role="form" th:action="@{/target/update}" th:object="${new_target}">
+
+          <div class="form-group mb-3">
+            <label>Target</label>
+            <select name="target" id="target" th:field="*{name}">
+              <option th:each="target : ${targets}" th:value="${target.name}" th:text="${target.name}">
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group mb-3">
+            <label class="form-label">Add money</label>
+            <input class="form-control" id="add_money" name="add_money" placeholder="Enter sum"
+              th:field="*{current_sum}" type="text" />
+            <p th:errors="*{current_sum}" class="text-danger" th:if="${#fields.hasErrors('current_sum')}"></p>
+          </div>
+
+          <div class="form-group">
+            <button class="btn btn-primary" type="submit">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="column scroll-table" style="margin-left:50px">
+
+      <div class="multi-button">
+        <button class="button" data-modal="modalOne">Add cost</button>
+        <button class="button" data-modal="modalTwo">Add category</button>
+        <button class="button" data-modal="modalThree">Add target</button>
+      </div>
+
+      <table style="margin-top:70px">
+        <thead>
+          <tr>
+            <th>Sum</th>
+            <th>Category</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+      </table>
+      <div class="scroll-table-body">
+        <table>
+          <tbody>
+            <tr th:each="cost : ${costs}">
+              <td th:text="${cost.amount}"></td>
+              <td th:text="${cost.category}"></td>
+              <td th:text="${date_format.format(cost.date)}"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <button class="button btn btn-outline-secondary" data-modal="modalFour">Set progress</button>
+        <div th:each="target : ${targets}" style="margin-top:10px;">
+          <span th:text="${target.name}" style="font-weight:18px"></span>
+          <span th:text="${target.final_sum}" style="font-weight:18px"></span>
+          <span style="font-weight:18px">₽</span>
+          <div class="progress" style="height: 20px; width: 80%; margin-top: 10px;">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar"
+              aria-label="Success example" aria-valuemin="0"
+              data-th-attr="aria-valuenow=${target.current_sum}, aria-valuemax=${target.final_sum}"
+              th:style="'width: ' + @{${target.progress}} + '%'" th:text="${target.current_sum}"></div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        let modalBtns = [...document.querySelectorAll(".button")];
+        modalBtns.forEach(function (btn) {
+          btn.onclick = function () {
+            let modal = btn.getAttribute("data-modal");
+            console.log(modal);
+            document.getElementById(modal).style.display = "block";
+          };
+        });
+        let closeBtns = [...document.querySelectorAll(".close")];
+        closeBtns.forEach(function (btn) {
+          btn.onclick = function () {
+            let modal = btn.closest(".modal");
+            modal.style.display = "none";
+          };
+        });
+        window.onclick = function (event) {
+          if (event.target.className === "modal") {
+            event.target.style.display = "none";
+          }
+        };
+      </script>
+
+    </div>
+    <div>
+      <div class="column">
+      </div>
+    </div>
+    <div>
+      <div class="column">
+
+        <div>
+          <h4 style="display: inline">Total credit: </h4>
+          <h4 style="display: inline" th:text="${total_credit}"></h4>
+          <h4 style="display: inline">₽</h4>
+          <canvas id="credit_chart" class="chart"></canvas>
+        </div>
+        <div>
+          <h4 style="display: inline">Total debit: </h4>
+          <h4 style="display: inline" th:text="${total_debit}"></h4>
+          <h4 style="display: inline">₽</h4>
+          <canvas id="debit_chart" class="chart"></canvas>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script th:inline="javascript">
+
+          const debit_chart = document.getElementById('debit_chart');
+          const credit_chart = document.getElementById('credit_chart');
+
+          /*<![CDATA[*/
+
+          const debit_labels = /*[[${debit_labels}]]*/[];
+          const debit_values = /*[[${debit_values}]]*/[];
+
+          const credit_labels = /*[[${credit_labels}]]*/[];
+          const credit_values = /*[[${credit_values}]]*/[];
+
+          new Chart(credit_chart, {
+            type: 'pie',
+            data: {
+              labels: Array.from(credit_labels),
+              datasets: [{
+                label: 'Sum: ',
+                data: Array.from(credit_values),
+                borderWidth: 1,
+                radius: "60%",
+              }]
+            }
+          });
+
+          new Chart(debit_chart, {
+            type: 'pie',
+            radius: 20,
+            data: {
+              labels: Array.from(debit_labels),
+              datasets: [{
+                label: 'Sum: ',
+                data: Array.from(debit_values),
+                borderWidth: 1,
+                radius: "60%",
+                //cutout: "60%"
+              }]
+            }
+          });
+
+          /*]]>*/
+        </script>
+
+      </div>
+    </div>
+    <div>
+      <div class="column"></div>
+    </div>
+  </div>
+</body>
+
+</html>

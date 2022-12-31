@@ -19,7 +19,7 @@ Javascript + chart.js, html, css, bootstrap
 </ul>
 <br>
 
-[Picture](doc/main.png)
+![Picture](doc/main.png)
 
 ----------------------------------------------------------
 <br><br>
@@ -40,4 +40,4 @@ Vanilla JS + chart.js, html, css, bootstrap
 </ul>
 <br>
 
-[Picture](doc/main.png)
+![Picture](doc/main.png)
